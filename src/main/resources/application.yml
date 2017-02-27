@@ -1,0 +1,61 @@
+server:
+  port: 9090
+  tomcat:
+    uri-encoding: UTF-8
+    basedir: /data/jeesite/tomcat
+    max-threads: 2000
+    min-spare-threads: 10
+    accesslog:
+      pattern: common
+      enabled: true
+      directory: ../logs
+      prefix: jeesite_access_log
+      suffix: .log
+      request-attributes-enabled: true
+      rename-on-rotate: true
+logging:
+  level:
+    root: INFO
+    com.woflking: DEBUG
+    org.apache.shiro.cache.ehcache.EhCacheManager: WARN
+spring:
+  #数据库的配置
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/wolfking-jeesite?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+      pool-name: wolfking-jeesite-pool
+#springMvc的配置
+  mvc:
+     view:
+       prefix: /WEB-INF/views/
+       suffix: .jsp
+     servlet:
+       load-on-startup: 1
+#spring-ehcache的配置
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+#mybatis的配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mappings/**/*.xml
+  type-aliases-package: com.wolfking.jeesite
+#admin页面管理Path
+adminPath: /admin
+#分页配置
+page:
+  pageSize: 10
+#文件上传的路径
+userfiles:
+  basedir: /data/jeesite/upload
